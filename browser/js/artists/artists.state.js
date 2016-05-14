@@ -9,13 +9,26 @@ app.config(function($stateProvider) {
       }
     }
   })
-  .state('artist', {
+  .state('artistSearch', {
     url: '/artists/:artist',
-    templateUrl: '/js/artists/artist.html',
+    templateUrl: '/js/artists/artist-search.html',
+    controller: 'ArtistSearchCtrl',
+    resolve: {
+      searchedArtists: function(ArtistsFactory, $stateParams) {
+        return ArtistsFactory.searchArtists($stateParams.artist);
+      }
+    }
+  })
+  .state('artist', {
+    url: '/artists/id/:id',
+    templateUrl: 'js/artists/artist.html',
     controller: 'ArtistCtrl',
     resolve: {
+      artist: function(ArtistsFactory, $stateParams) {
+        return ArtistsFactory.fetchArtist($stateParams.id);
+      },
       relatedArtists: function(ArtistsFactory, $stateParams) {
-        return ArtistsFactory.relatedArtists($stateParams.artist);
+        return ArtistsFactory.fetchRelatedArtists($stateParams.id);
       }
     }
   });
