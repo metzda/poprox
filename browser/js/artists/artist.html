@@ -20,9 +20,47 @@
 
     </div>
   </div>
-  <md-content layout-paddng>
-    <div layout="row" layout-wrap>
-      <artist-card ng-repeat="artist in relatedArtists" flex-gt-lg="10" flex-gt-md="20" flex-gt-sm="33" flex="100"></artist-card>
+  <div class="row">
+    <div class="col-xs-2">
+      <label for="distanceSelect">Distance</label>
+      <select name="distanceSelect" class="form-control" ng-model="distance" ng-init="All">
+        <option ng-repeat="dist in distanceOptions" value="{{dist.value}}" ng-selected="{{distance == dist.value}}">{{dist.name}}</option>
+      </select>
+
+      <!-- <select ng-model="distance" name="distanceSelect" class="form-control">
+        <option value="100000" selected>All</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="250">250</option>
+      </select> -->
     </div>
-  </md-content>
+    <div class="col-xs-8">
+      <table class="table">
+        <tr>
+          <td>Date</td>
+          <td>Artist</td>
+          <td>Location</td>
+          <td>Distance</td>
+          <td>Venue</td>
+          <td>Ticket Status</td>
+          <td>On Sale Date</td>
+          <td>Buy Tickets</td>
+        </tr>
+
+        <tr ng-repeat="event in events | orderBy:['datetime', 'artist']:sortReverse" ng-class="{info: event.artist===artist.name}" ng-if="getDistance(event.venue.latitude, event.venue.longitude) < distance">
+          <td>{{event.datetime | date:'MMM d, yyyy'}}</td>
+          <td>{{event.artist}}</td>
+          <td>{{event.formatted_location}}</td>
+          <td>{{getDistance(event.venue.latitude, event.venue.longitude) | number:0}} miles</td>
+          <td>{{event.venue.name}}</td>
+          <td>{{event.ticket_status}}</td>
+          <td>{{event.on_sale_datetime | date:'MMM d, yyyy'}}</td>
+          <td><a class="btn btn-success" ng-href="{{event.ticket_url}}">Buy Tickets</a></td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-xs-2">
+    </div>
+  </div>
 </div>

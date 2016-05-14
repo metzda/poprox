@@ -28,3 +28,10 @@ router.get('/id/:id/related', function(req, res, next) {
     res.status(200).send(body);
   });
 });
+
+router.get('/events/:name', function(req, res, next) {
+  var name = req.params.name;
+  request.get({url: "http://api.bandsintown.com/artists/"+name+"/events.json?api_version=2.0&app_id=POP_ROX"}, function(err, response, body) {
+    res.status(200).send(body);
+  });
+});

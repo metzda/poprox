@@ -27,8 +27,11 @@ app.config(function($stateProvider) {
       artist: function(ArtistsFactory, $stateParams) {
         return ArtistsFactory.fetchArtist($stateParams.id);
       },
-      relatedArtists: function(ArtistsFactory, $stateParams) {
-        return ArtistsFactory.fetchRelatedArtists($stateParams.id);
+      events: function(ArtistsFactory, $stateParams) {
+        return ArtistsFactory.fetchRelatedEvents($stateParams.id);
+      },
+      currLocation: function(ArtistsFactory) {
+        return ArtistsFactory.getCurrentPosition();
       }
     }
   });
